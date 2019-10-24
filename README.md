@@ -1,3 +1,6 @@
+python setup.py install
+tern -l report -f markdown -i balluff/cmid-ui-dev -o output.md
+
 ![Tern](/docs/img/tern_logo.png)
 
 [![CircleCI](https://circleci.com/gh/vmware/tern.svg?style=svg)](https://circleci.com/gh/vmware/tern)

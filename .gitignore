@@ -9,3 +9,7 @@ report.json
 tern.log
 cache.yml
 vagrant/.*
+venv
+build
+tern.egg-info
+output.*

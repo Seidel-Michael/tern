@@ -150,7 +150,7 @@ def main():
                                metavar='REPORT_FORMAT',
                                help="Format the report using one of the "
                                "available formats: "
-                               "spdxtagvalue, json, yaml")
+                               "spdxtagvalue, json, yaml, markdown")
     parser_report.add_argument('-o', '--output-file', default=None,
                                metavar='FILE',
                                help="Write the report to a file. "
