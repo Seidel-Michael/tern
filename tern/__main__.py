@@ -156,6 +156,9 @@ def main():
                                help="Write the report to a file. "
                                "If no file is given the default file in "
                                "utils/constants.py will be used")
+    parser_report.add_argument('--local-licenses-folder', default=os.getcwd(),
+                               help="Local Folder with additional license files"
+                               "if spdx database does miss a license. ")
     parser_report.set_defaults(name='report')
     args = parser.parse_args()
 

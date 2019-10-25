@@ -14,11 +14,19 @@ from tern.report import formats
 from tern.formats import generator
 from tern.report import content
 from tern.utils import constants
-
+import os.path
+from os import path
+import argparse
 
 # global logger
 logger = logging.getLogger(constants.logger_name)
 
+parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawTextHelpFormatter)
+parser.add_argument('--local-licenses-folder', default=os.getcwd(),
+                               help="Local Folder with additional license files"
+                               "if spdx database does miss a license. ")
+args = parser.parse_known_args()
 
 def print_licenses_only(image_obj_list):
     '''Print a complete list of licenses for all images'''
@@ -30,8 +38,13 @@ def print_licenses_only(image_obj_list):
                     result += "#" + package.name + "\n"
                     result += "**Version:** "+package.version+"\n"
                     result += "**License:** "+package.pkg_license+"\n"
-                    r = requests.get("https://raw.githubusercontent.com/spdx/license-list-data/master/text/"+package.pkg_license+".txt")
-                    result += "```\n"+r.text+"\n```\n"
+
+                    if (path.exists(args[0].local_licenses_folder + "/" + package.pkg_license + ".txt")):
+                        with open(args[0].local_licenses_folder + "/" + package.pkg_license + ".txt") as f:
+                            result += "```\n"+f.read()+"\n```\n"
+                    else:
+                        r = requests.get("https://raw.githubusercontent.com/spdx/license-list-data/master/text/"+package.pkg_license+".txt")
+                        result += "```\n"+r.text+"\n```\n"
     return result
 
 

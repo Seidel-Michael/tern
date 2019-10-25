@@ -1,5 +1,6 @@
 python setup.py install
 tern -l report -f markdown -i balluff/cmid-ui-dev -o output.md
+tern -l report -f markdown -i balluff/cmid-ui-dev -o output.md --local-licenses-folder ./licenses/
 
 ![Tern](/docs/img/tern_logo.png)
 
