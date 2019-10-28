@@ -12,6 +12,8 @@ import os
 import shutil
 import subprocess  # nosec
 import pkg_resources
+import grp
+import pwd
 
 from tern.utils import constants
 from tern.utils import general
@@ -43,13 +45,22 @@ union_mount = ['mount', '-t', 'overlay', 'overlay', '-o']
 logger = logging.getLogger(constants.logger_name)
 
 
+def is_sudo():
+    '''Check if the user uses sudo for docker commands'''
+    sudo = False
+    try:
+        members = grp.getgrnam('sudo').gr_mem
+        if pwd.getpwuid(os.getuid()).pw_name in members:
+            sudo = True
+    except KeyError:
+        pass
+    return sudo
+
 def root_command(command, *extra):
     '''Invoke a shell command as root or using sudo. The command is a
     list of shell command words'''
     full_cmd = []
-    sudo = True
-    if os.getuid() == 0:
-        sudo = False
+    sudo = is_sudo()
     if sudo:
         full_cmd.append('sudo')
     full_cmd.extend(command)

@@ -1,6 +1,7 @@
 CHANGES
 =======
 
+* added 404 error handling and local licenses
 * added local license option
 * added markdown format generator
 * extensions: Added initial scancode extension
