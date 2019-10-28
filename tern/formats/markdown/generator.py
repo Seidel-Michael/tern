@@ -50,6 +50,7 @@ def print_licenses_only(image_obj_list):
                         if r.status_code == 200:
                             result += "```\n"+r.text+"\n```\n"
                         else:
+                            result += "```\nNo license file for " + package.version + " " +package.pkg_license+" found!\n```\n"
                             logger.error("No license file for " + package.version + " " +package.pkg_license+" found!")
     return result
 
