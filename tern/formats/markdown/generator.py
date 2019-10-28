@@ -39,12 +39,18 @@ def print_licenses_only(image_obj_list):
                     result += "**Version:** "+package.version+"\n"
                     result += "**License:** "+package.pkg_license+"\n"
 
-                    if (path.exists(args[0].local_licenses_folder + "/" + package.pkg_license + ".txt")):
+                    if(path.exists(args[0].local_licenses_folder + "/" + package.version + ".txt")):
+                        with open(args[0].local_licenses_folder + "/" + package.version + ".txt") as f:
+                            result += "```\n"+f.read()+"\n```\n"
+                    elif (path.exists(args[0].local_licenses_folder + "/" + package.pkg_license + ".txt")):
                         with open(args[0].local_licenses_folder + "/" + package.pkg_license + ".txt") as f:
                             result += "```\n"+f.read()+"\n```\n"
                     else:
                         r = requests.get("https://raw.githubusercontent.com/spdx/license-list-data/master/text/"+package.pkg_license+".txt")
-                        result += "```\n"+r.text+"\n```\n"
+                        if r.status_code == 200:
+                            result += "```\n"+r.text+"\n```\n"
+                        else:
+                            logger.error("No license file for " + package.version + " " +package.pkg_license+" found!")
     return result
 
 

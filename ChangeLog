@@ -1,6 +1,7 @@
 CHANGES
 =======
 
+* added local license option
 * added markdown format generator
 * extensions: Added initial scancode extension
 * tools: Fix imports for container\_debug
